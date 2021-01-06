@@ -1,0 +1,121 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css" crossorigin="anonymous">
+    <script>
+function search(iframeName, url) {
+		var searchInput = $("#searchInput").val()
+
+        $.get( "http://localhost:8080/api/v1/search/process?query=" + searchInput, function( response ) {
+		       console.log(response)
+		       totalContent = ""
+		        $.each(response, function() {
+
+		               if(this.page){
+
+                            window.location.href = this.url
+		               }else{
+
+                           console.log(this)
+                           $( "#out" ).html( "Matched content: " + this.word );
+                           console.log(response.url)
+                                 totalContent =  totalContent + "<div class='out'><img class='inimg' src='"+ this.url+"'/>" +
+                                     "<div class='intext'> <div class='inintext'> 19 dec. 19:28 <div style='float:left;padding-right: 190px;'> Väskör Göteborg </div></div><div> " +
+                                     this.word + "</div><div style='color:rgb(73, 185, 117);margin-top:85px;'> 9900 kr</div></div></div><br/>"
+
+                        }
+                });
+	            $("#out").html(totalContent)
+         });
+
+}
+
+    </script>
+    <style>
+body{
+background-color:rgb(249, 247, 246);
+}
+
+.out{
+	box-shadow: rgba(0, 0, 0, 0.25) 0px 1px 0px 0px;
+width: 700px;
+background-color: white;
+    height: 175px;
+    padding: 5px;
+    margin: 2px;
+}
+  .intext{
+font-family: BlocketSans-Medium;
+float:left;
+font-size:21px
+  }
+  .inimg{
+    float:left;
+    width:170px;
+  }
+  .inintext{
+    font-size:17px;
+    color:rgb(105, 103, 102);
+    width:100%;
+    padding:4px
+  }
+  #searchInput{
+  text-indent: 22px;padding-left: 16px;
+    border: none;
+    height: 40px;
+    font-family: BlocketSans-Regular;
+    -webkit-font-smoothing: antialiased;
+    font-size: 23px;
+    appearance: none;
+    outline: 0px;
+    padding-left: 40px;
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+    color: rgb(54, 52, 52);
+    border: 1px solid rgb(154, 153, 153);
+    border-radius: 4px;
+    background-color: white;
+    cursor: text;
+    height: 48px;
+
+  }
+
+
+    </style>
+</head>
+<img src="head.png" style="width:100%"/>
+<div style="width:100%;    background-color: rgb(65, 130, 195);max-width: 100%;
+    margin: 0px auto;
+    padding: 8px 0px;">
+    <center>
+        <input type="text" id="searchInput"/></center>
+</div>
+
+<img src="mid.png" style="width:100%"/>
+
+<div style="margin-left:239px;margin-top:10px">
+
+
+    <p>
+        <br/><br/>
+    <div id="out">
+    </div>
+</div>
+<br/>
+</p>
+</div>
+
+
+<script>
+var input = document.getElementById("searchInput");
+
+input.addEventListener("keyup", function(event) {
+  if (event.keyCode === 13) {
+    event.preventDefault();
+    search();
+   }
+});
+
+
+
+</script>
